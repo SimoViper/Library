@@ -1,42 +1,16 @@
-var express = require('express');
-var app = express();
-var fs = require("fs");
-const axios = require('axios');
-const Book = require('./models/book');
+const express = require('express');
+const app = express();
 const bodyParser = require("body-parser");
 const service = require('./services/mongoservice');
+const mongoose = require('mongoose');
+const routes = require('./controllers/api-routes.js');
+//var Schema = mongoose.Schema;
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+
+mongoose.connect('mongodb://root:password@localhost:27017/library?authSource=admin', { useNewUrlParser: true });
+
+app.use('/', routes);
 app.use(bodyParser.json());
-
-app.post("/books-library/books", function (req, res) {
-    let book = new Book({
-      title: req.body.book.title,
-      author: req.body.book.author,
-      publisher: req.body.book.publisher,
-      available: true,
-      language: req.body.book.language
-    });
-    service.save(book);
-    res.send(JSON.stringify(book));
-});
-
-app.get("/books-library/books", async function (req, res) {
-    let books = await service.findAll();
-    res.send(books);
-});
-
-app.get("/books-library/books/:title", async function (req, res) {
-    let books = await service.findByTitle(req.params.title);
-    res.send(books);
-});
-
-app.delete("/books-library/books/:title", async function (req, res) {
-  service.delete(req.params.title);
-  res.sendStatus(200);
-});
 
 var server = app.listen(8081, function () {
    var host = server.address().address

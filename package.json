@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha 'controllers/api-routes-test.js' --exit"
+    "test": "mocha 'test/e2e/api-routes-e2e-test.js' --exit"
   },
   "author": "",
   "license": "ISC",

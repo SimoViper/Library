@@ -24,13 +24,10 @@ router.get("/books-library/books", async function (req, res) {
 
     if(title){
        books =  await service.findByTitle(title);
-       console.log('title', title);
     }else if(author){
-        books = await  service.findByAuthor(author);
-        console.log('author', author);
+        books = await service.findByAuthor(author);
      }else{
         books = await service.findAll();
-        console.log('Find All', author);
      }
     
     

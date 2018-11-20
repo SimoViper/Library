@@ -18,7 +18,9 @@ module.exports = {
   },
 
   findByTitle: function(title) {
-    return Book.find({"title": title}).limit(100).exec();
+    return Book.find({"title": title}, function (err, books) {
+      
+    });
   },
 
   findByAuthor: function(author) {

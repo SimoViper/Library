@@ -1,10 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
-const service = require('./services/mongoservice');
 const mongoose = require('mongoose');
 const routes = require('./controllers/api-routes.js');
-//var Schema = mongoose.Schema;
 
 
 mongoose.connect('mongodb://root:password@localhost:27017/library?authSource=admin', { useNewUrlParser: true });
@@ -17,3 +15,5 @@ var server = app.listen(8081, function () {
    var port = server.address().port
    console.log("Example app listening at http://%s:%s", host, port)
 })
+
+module.exports = app;

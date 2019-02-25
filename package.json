@@ -7,13 +7,17 @@
     "start": "node server.js",
     "test": "mocha 'test/e2e/api-routes-e2e-test.js' --exit"
   },
+  "GCLOUD_PROJECT": "trusty-sol-212013",
+  "DATA_BACKEND": "datastore",
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "jsonschema": "^1.2.4",
     "mocha": "^5.2.0",
     "mongoose": "^5.3.8",
-    "sinon": "^7.1.1"
+    "sinon": "^7.1.1",
+    "swagger-ui-express": "^4.0.2"
   },
   "devDependencies": {
     "supertest": "^3.3.0"

@@ -2,17 +2,37 @@ const express = require('express');
 const service = require('../services/mongoservice');
 const Book = require('../models/book');
 const router = express.Router();
+const Validator = require('jsonschema').Validator;
+const v = new Validator();
+const schema = {
+    "id": "/Book",
+    "type": "object",
+    "properties": {
+      "title": {"type": "string", "required": true },
+      "author": {"type": "string", "required": true },
+      "publisher": {"type": "string"}
+    }
+  };
+
 
 router.post("/books-library/books", function (req, res) {
+    const val = v.validate(req.body, schema);
+
+    val.errors.forEach(error => {
+        let index = error.stack.indexOf('.');
+        console.log('Message: ', error.stack.substring(index + 1));
+    });
+
     let book = new Book({
-      title: req.body.book.title,
-      author: req.body.book.author,
-      publisher: req.body.book.publisher,
+      title: req.body.title,
+      author: req.body.author,
+      publisher: req.body.publisher,
       available: true,
-      language: req.body.book.language
+      language: req.body.language
     });
     service.save(book);
-    res.send(JSON.stringify(book));
+   res.send(JSON.stringify(book));
+   res.sendStatus(200);
 })
 
 router.get("/books-library/books", async function (req, res) {
@@ -40,8 +60,8 @@ router.get("/books-library/books/:bookId", async function (req, res) {
     res.send(books);
 })
 
-router.delete("/books-library/books/:id", async function (req, res) {
-    service.delete(req.params.id);
+router.delete("/books-library/books/:bookId", async function (req, res) {
+    service.delete(req.params.bookId);
     res.sendStatus(200);
   })
 
